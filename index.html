@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AeroForge VR: Design-to-Flight. A research project on spatial aircraft authoring, structure-conditioned generation, and in-headset interaction.">
+  <meta property="og:title" content="AeroForge VR: Design-to-Flight">
+  <meta property="og:description" content="Project video, paper, generation pipeline, and an interactive ModelNet40 shape-prior explorer.">
+  <meta property="og:image" content="static/images/social-preview.jpg">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#ffffff">
+  <title>AeroForge VR: Design-to-Flight</title>
+  <link rel="icon" href="static/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="static/css/index.css">
+</head>
+<body>
+<a class="skip-link" href="#abstract">Skip to research content</a>
+<main>
+  <header class="paper-header page-width" id="top">
+    <h1 translate="no">AeroForge VR: Design-to-Flight</h1>
+    <p class="venue">2026 IEEE International Symposium on Mixed and Augmented Reality</p>
+    <div class="authors" aria-label="Authors"><a href="mailto:shang217@umn.edu" translate="no">Songlin Shang</a><span aria-hidden="true">·</span><a href="mailto:hu000809@umn.edu" translate="no">Yushen Hu</a></div>
+    <p class="affiliation">University of Minnesota – Twin Cities</p>
+    <nav class="resource-row" aria-label="Project resources">
+      <a class="resource-button" href="static/pdf/aeroforge-vr-ismar-2026-demo.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h5"/></svg>Paper</a>
+      <a class="resource-button" href="#video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 10 7-10 7z"/></svg>Video</a>
+      <a class="resource-button" href="#dataset"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 4 16 4 16 0V5M4 12v6c0 4 16 4 16 0v-6"/></svg>Dataset</a>
+      <a class="resource-button" href="https://www.ieeeismar.net/2026/demos/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M10 14 20 4M11 4H4v16h16v-7"/></svg>Conference</a>
+    </nav>
+  </header>
+
+  <section id="video" class="video-teaser page-width" aria-label="Project video">
+    <figure>
+      <video id="demoVideo" controls autoplay muted loop playsinline preload="metadata" poster="static/images/demo-poster.jpg" aria-label="AeroForge VR project video">
+        <source src="static/videos/aeroforge-demo.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+      </video>
+      <figcaption>AeroForge VR: Design-to-Flight.</figcaption>
+    </figure>
+  </section>
+
+  <section class="section page-width text-section" id="abstract">
+    <h2>Abstract</h2>
+    <p>AeroForge VR is designed as an entry point to 3D authoring for participants with limited experience using conventional 3D modeling tools. Participants assemble and transform primitives to express an aircraft’s coarse spatial structure and proportions. The system encodes the blockout as a signed distance field (SDF) and retrieves airplane priors. Both condition a 3D diffusion model.</p>
+    <p>After generation, participants navigate their aircraft through a cloudscape and paint mountain terrain. They experience their generated aircraft in motion and explore its spatial form from multiple viewpoints. This design-to-flight workflow integrates spatial authoring, structure-conditioned generation, and in-headset interaction into an immersive creative experience.</p>
+  </section>
+
+  <section class="section page-width" id="pipeline">
+    <h2>Design-to-Flight Pipeline</h2>
+    <figure class="pipeline-figure">
+      <a id="openFigure" class="figure-link" href="static/images/aeroforge-pipeline.png" target="_blank" rel="noopener" aria-label="Enlarge the generation pipeline"><img src="static/images/aeroforge-pipeline.png" alt="AeroForge generation pipeline. The input SDF queries a shape library; input SDF and retrieved airplane priors jointly condition 3D diffusion. Depth refinement, SDF fusion, and Marching Cubes return an aircraft mesh to Quest 3." loading="lazy"><span class="figure-zoom" aria-hidden="true">Enlarge ↗</span></a>
+      <figcaption>Aircraft-generation pipeline. Figure 2 from the paper.</figcaption>
+    </figure>
+    <div class="conditioning-note">
+      <div><h3>Condition 1 · User-authored structure</h3><p>The primitive assembly is canonicalized and sampled on a <span translate="no">64 × 64 × 64</span> grid. The resulting input SDF encodes the component layout and proportions specified by the user.</p></div>
+      <div><h3>Condition 2 · Retrieved airplane priors</h3><p>The same input SDF queries a preprocessed ModelNet40 airplane library. The retrieved airplane shapes and the input SDF jointly condition the 3D diffusion model.</p></div>
+    </div>
+  </section>
+
+  <section class="section page-width" id="dataset">
+    <h2>ModelNet40 Airplane Shape Library</h2>
+    <p class="section-intro">Browse source airplane meshes and explore their signed-distance representations.</p>
+    <p class="scope-line"><span><strong>46</strong> interactive models <span class="subtle" translate="no">(15 train · 31 test)</span></span><span class="scope-divider" aria-hidden="true">/</span><a href="#metadata"><strong>726</strong> airplane metadata records ↓</a></p>
+
+    <div class="explorer dataset-block" id="shapeExplorer">
+      <div class="block-heading"><div><h3>Shape Prior Explorer</h3><p>Surface geometry, distance-field slices, and zero isosurfaces.</p></div><button id="expandExplorer" type="button" class="expand-button" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5M15 4h5v5M4 15v5h5M20 15v5h-5"/></svg><span>Expand</span></button></div>
+      <div class="representation-toolbar">
+        <div class="mode-tabs" role="group" aria-label="Representation">
+          <button class="mode-tab active" data-mode="surface" aria-pressed="true" type="button">Surface</button>
+          <button class="mode-tab" data-mode="sdf" aria-pressed="false" type="button"><span translate="no">SDF</span> slices</button>
+          <button class="mode-tab" data-mode="iso" aria-pressed="false" type="button">Zero isosurface</button>
+          <button class="mode-tab" data-mode="wire" aria-pressed="false" type="button">Wireframe</button>
+        </div>
+        <div class="view-actions"><button id="resetView" type="button" title="Double-click the view, or press R">Reset view</button><button id="toggleSpin" type="button" aria-pressed="false">Auto-rotate</button></div>
+      </div>
+      <p id="representationNote" class="representation-note" aria-live="polite">Shaded view of the source shape using a display mesh.</p>
+      <div class="explorer-layout">
+        <div class="viewer-column">
+          <div class="canvas-shell">
+            <canvas id="modelCanvas" tabindex="0" aria-label="Interactive 3D model. Drag to orbit, scroll or pinch to zoom, arrow keys to orbit, R to reset."></canvas>
+            <span class="viewer-help">Drag to orbit · Scroll to zoom · Double-click to reset</span>
+            <span id="viewBadge" class="view-badge" translate="no">Source surface</span>
+            <div id="viewerStatus" class="viewer-status" role="status">Loading the first model…</div>
+          </div>
+          <div class="selected-mesh-meta">
+            <div class="mesh-id-line"><div><span class="meta-label">Selected source mesh</span><h4 id="meshTitle" class="notranslate" translate="no">airplane_0003.off</h4></div><span id="meshSplit" class="split-label notranslate" translate="no">train</span></div>
+            <div class="mesh-stats"><span>Source: <strong id="meshVerts" translate="no">42,472</strong> vertices / <strong id="meshFaces" translate="no">44,580</strong> faces</span><span id="meshSize" translate="no"></span></div>
+            <p id="displayStats" class="display-stats"></p>
+          </div>
+        </div>
+        <aside class="mesh-browser" aria-label="Available source meshes">
+          <div class="mesh-browser-controls">
+            <label class="sr-only" for="meshSearch">Search available mesh</label><input id="meshSearch" type="search" placeholder="Search a mesh, e.g. 0003" autocomplete="off" spellcheck="false">
+            <div class="mesh-split-tabs" role="group" aria-label="Source dataset split" translate="no">
+              <button class="mesh-split active" data-split="all" type="button" aria-pressed="true">All <span>46</span></button>
+              <button class="mesh-split" data-split="train" type="button" aria-pressed="false">Train <span>15</span></button>
+              <button class="mesh-split" data-split="test" type="button" aria-pressed="false">Test <span>31</span></button>
+            </div>
+          </div>
+          <div class="mesh-list-head"><span>Object ID</span><span>Split</span></div>
+          <div id="meshList" class="mesh-list notranslate" translate="no" aria-label="Select a mesh"></div>
+          <div class="mesh-list-footer"><button id="previousMesh" type="button" aria-label="Previous mesh">←</button><span id="meshCounter" translate="no">46 available</span><button id="nextMesh" type="button" aria-label="Next mesh">→</button></div>
+        </aside>
+      </div>
+
+      <div id="sdfControls" class="sdf-controls" hidden>
+        <figure class="slice-figure"><div class="slice-labels"><strong id="sliceTitle" translate="no">X–Z slice</strong><span id="sliceGridLabel" translate="no">64 × 64 samples</span></div><canvas id="sliceCanvas" width="480" height="480" aria-label="Two-dimensional sampled signed-distance slice"></canvas><figcaption id="sliceReadout" translate="no">Move over the slice to read d(x,y,z).</figcaption></figure>
+        <div class="slice-settings">
+          <h4>Inspect the signed field</h4>
+          <p>Blue indicates the voxelized interior; rust indicates the exterior. The dark contour marks <span translate="no"><i>d</i> = 0</span>.</p>
+          <div class="control-line"><label for="sliceAxis">Plane normal</label><select id="sliceAxis" translate="no"><option value="0">X axis</option><option value="1" selected>Y axis</option><option value="2">Z axis</option></select></div>
+          <div class="range-label"><label for="slicePosition">Slice position</label><output id="slicePositionValue" for="slicePosition" translate="no">32 / 64</output></div>
+          <input id="slicePosition" type="range" min="0" max="63" value="32" step="1">
+          <div class="range-extents"><span translate="no">−1.15</span><span>Normalized coordinates</span><span translate="no">+1.15</span></div>
+          <div class="range-label"><label for="colorRange">Color range ±</label><output id="colorRangeValue" for="colorRange" translate="no">0.15</output></div>
+          <input id="colorRange" type="range" min="0.03" max="0.40" value="0.15" step="0.01">
+          <div class="sdf-legend" aria-hidden="true"></div><div class="range-extents"><span id="legendMin">−0.15 inside</span><span translate="no">0</span><span id="legendMax">+0.15 outside</span></div>
+          <div class="checkboxes"><label><input type="checkbox" id="showContext" checked> Show clipped surface</label><label><input type="checkbox" id="showContour" checked> Show zero contour</label></div>
+          <div class="field-footer"><span class="field-badge"><span translate="no">64³</span> grid · normalized units</span><a id="downloadField" class="text-action" href="static/fields/airplane_0003_voxel_sdf.npz" download>Download field <span translate="no">(.npz)</span> ↓</a></div>
+        </div>
+      </div>
+    </div>
+    <p class="provenance-strip"><strong>SDF previews.</strong> The SDF previews are <span translate="no">64³</span> voxel-derived approximations independently computed from ModelNet40 <span translate="no">OFF</span> meshes for this viewer.</p>
+    <details class="method-details" id="field-method">
+      <summary>Preview preprocessing</summary>
+      <div class="method-content">
+        <p>Source <span translate="no">OFF</span> meshes are centered and uniformly normalized for display. A <span translate="no">64³</span> voxel-derived signed-distance approximation is computed for each mesh, with negative values inside and positive values outside. Marching Cubes extracts the zero isosurface. Surface and wireframe views use simplified display meshes, with source-mesh statistics reported separately.</p>
+        <p class="method-resources"><a href="PREPROCESSING.md" download>Preprocessing details ↓</a><span aria-hidden="true">·</span><a href="static/data/field-provenance.json" download>Per-model provenance <span translate="no">(JSON)</span> ↓</a></p>
+      </div>
+    </details>
+
+    <div class="dataset-block metadata-block" id="metadata">
+      <div class="block-heading"><div><h3>Airplane Metadata</h3><p>Browse the ModelNet40 airplane records. Entries marked <span class="preview-tag" translate="no">3D</span> are available in the explorer above.</p></div><a class="text-action" href="static/data/metadata_modelnet40_airplane.csv" download>Download CSV ↓</a></div>
+      <div class="column-profiles" aria-label="Full airplane class profile">
+        <div><code translate="no">object_id</code><strong translate="no">726</strong><small>unique IDs</small></div>
+        <div><code translate="no">class</code><strong translate="no">airplane</strong><small>100% of records</small></div>
+        <div><code translate="no">split</code><div class="split-bar" aria-hidden="true"><span></span><i></i></div><small translate="no">626 train · 100 test</small></div>
+        <div><code translate="no">object_path</code><strong translate="no">726</strong><small>source paths</small></div>
+      </div>
+      <div class="metadata-controls">
+        <label class="sr-only" for="metadataSearch">Search metadata</label><input id="metadataSearch" type="search" placeholder="Search object ID or path" autocomplete="off" spellcheck="false">
+        <label class="sr-only" for="metadataSplit">Metadata split</label><select id="metadataSplit" translate="no"><option value="all">All splits</option><option value="train">Train</option><option value="test">Test</option></select>
+        <label class="preview-filter"><input id="previewOnly" type="checkbox"> With 3D preview</label>
+        <label class="rows-control">Rows <select id="rowsPerPage"><option selected>15</option><option>25</option><option>50</option></select></label>
+        <button id="clearMetadata" class="text-button" type="button" hidden>Clear filters</button>
+      </div>
+      <div class="metadata-table-wrap" tabindex="0" aria-label="Scrollable metadata table">
+        <table class="metadata-table notranslate" translate="no"><caption class="sr-only">Airplane-only metadata. Select an ID with a 3D badge to inspect the corresponding model.</caption><thead><tr>
+          <th scope="col" aria-sort="ascending"><button class="sort-button" data-key="object_id" type="button">object_id <span>↑</span></button></th>
+          <th scope="col"><button class="sort-button" data-key="class" type="button">class <span>↕</span></button></th>
+          <th scope="col"><button class="sort-button" data-key="split" type="button">split <span>↕</span></button></th>
+          <th scope="col"><button class="sort-button" data-key="object_path" type="button">object_path <span>↕</span></button></th>
+        </tr></thead><tbody id="metadataBody"></tbody></table>
+      </div>
+      <div class="metadata-footer"><span id="metadataCount" aria-live="polite">726 records</span><button id="exportFiltered" class="text-button" type="button">Export filtered CSV ↓</button><div class="pagination"><button id="prevPage" type="button" aria-label="Previous metadata page">Previous</button><span id="pageInfo" translate="no">1 / 49</span><button id="nextPage" type="button" aria-label="Next metadata page">Next</button></div></div>
+      <p class="table-note">Split labels follow the original ModelNet40 metadata.</p>
+    </div>
+    <div class="dataset-resources"><a href="static/data/modelnet40-airplane-subset.zip" download>Source OFF subset <span translate="no">(46 meshes + CSV)</span> ↓</a><span aria-hidden="true">·</span><a href="static/data/metadata_modelnet40_airplane.csv" download>Airplane metadata <span translate="no">(726 rows)</span> ↓</a><span aria-hidden="true">·</span><a href="https://modelnet.cs.princeton.edu/" target="_blank" rel="noopener">Princeton ModelNet40 ↗</a></div>
+    <p class="dataset-reference">ModelNet40: Z. Wu et al. <i>3D ShapeNets: A Deep Representation for Volumetric Shapes.</i> CVPR, 2015.</p>
+  </section>
+
+  <section class="section page-width text-section citation-section" id="citation">
+    <h2>Citation</h2>
+    <div class="bibtex-box"><div class="bibtex-toolbar"><span>Manuscript BibTeX</span><div><a href="static/data/aeroforge.bib" download>Download <span translate="no">.bib</span> ↓</a><button id="copyBib" type="button">Copy BibTeX</button></div></div><pre id="bibtex" class="notranslate" translate="no"><code>@misc{shang2026aeroforge,
+  title  = {AeroForge VR: Design-to-Flight},
+  author = {Shang, Songlin and Hu, Yushen},
+  year   = {2026},
+  note   = {Author-provided manuscript, IEEE ISMAR 2026}
+}</code></pre></div>
+  </section>
+</main>
+<footer class="footer page-width"><span translate="no">AeroForge VR · 2026</span><a href="#top">Back to top ↑</a></footer>
+<dialog id="figureDialog" class="figure-dialog" aria-labelledby="figureDialogTitle"><div class="dialog-heading"><h2 id="figureDialogTitle">Aircraft-generation pipeline</h2><div><button id="figureScale" type="button">Actual size</button><button id="closeFigure" type="button">Close <span aria-hidden="true">×</span></button></div></div><div class="figure-dialog-body"><img src="static/images/aeroforge-pipeline.png" alt="Full AeroForge aircraft-generation pipeline"></div></dialog>
+<dialog id="explorerDialog" class="explorer-dialog" aria-label="Expanded shape-prior explorer"><div id="explorerDialogBody"></div></dialog>
+<div id="copyStatus" class="sr-only" role="status" aria-live="polite"></div>
+<noscript><p class="noscript">The paper and video remain available. Enable JavaScript to use the mesh and metadata explorers.</p></noscript>
+<script src="static/js/modelnet-data.js"></script>
+<script src="static/js/renderer-fallback.js"></script>
+<script src="static/js/index.js"></script>
+<script src="static/js/interface.js"></script>
+</body>
+</html>
