@@ -1,19 +1,17 @@
 <h1 align="center">AeroForge VR: Design-to-Flight</h1>
 
 <p align="center">
-  <strong>2026 IEEE International Symposium on Mixed and Augmented Reality</strong><br>
-  Accepted demonstration
+  <strong>2026 IEEE International Symposium on Mixed and Augmented Reality</strong>
 </p>
 
 <p align="center">
-  <a href="mailto:shang217@umn.edu">Songlin Shang</a> ·
-  <a href="mailto:hu000809@umn.edu">Yushen Hu</a><br>
+  <a href="mailto:shang217@umn.edu">Songlin Shang</a>&nbsp;·&nbsp;<a href="mailto:hu000809@umn.edu">Yushen Hu</a><br>
   University of Minnesota – Twin Cities
 </p>
 
 <p align="center">
-  <a href="https://songlin-git.github.io/AeroForge-VR/"><img src="https://img.shields.io/badge/Project-Page-245f91" alt="Project page"></a>
-  <a href="static/pdf/aeroforge-vr-ismar-2026-demo.pdf"><img src="https://img.shields.io/badge/Paper-PDF-9a334a" alt="Paper PDF"></a>
+  <a href="https://songlin-git.github.io/AeroForge-VR/"><img src="https://img.shields.io/badge/Project-Page-245f91" alt="Project page"></a>&nbsp;
+  <a href="static/pdf/aeroforge-vr-ismar-2026-demo.pdf"><img src="https://img.shields.io/badge/Paper-PDF-9a334a" alt="Paper PDF"></a>&nbsp;
   <a href="https://songlin-git.github.io/AeroForge-VR/#dataset"><img src="https://img.shields.io/badge/Explorer-3D_%2B_SDF-497566" alt="3D and SDF explorer"></a>
 </p>
 
