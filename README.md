@@ -90,13 +90,14 @@ This repository contains the project page and its visualization assets. The foll
 
 ## Citation
 
-To cite the accompanying manuscript, use the following entry or the included [BibTeX file](static/data/aeroforge.bib).
+If you use this work, please cite our paper using the following entry or the included [BibTeX file](static/data/aeroforge.bib).
 
 ```bibtex
-@misc{shang2026aeroforge,
-  title  = {AeroForge VR: Design-to-Flight},
-  author = {Shang, Songlin and Hu, Yushen},
-  year   = {2026},
-  note   = {Author-provided manuscript, IEEE ISMAR 2026}
+@inproceedings{shang2026aeroforge,
+  title     = {{AeroForge VR}: Design-to-Flight},
+  author    = {Shang, Songlin and Hu, Yushen},
+  booktitle = {2026 IEEE International Symposium on Mixed and Augmented Reality Adjunct},
+  year      = {2026},
+  note      = {Accepted for publication}
 }
 ```
